@@ -1,9 +1,9 @@
 import React from 'react';
 
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 import { WidgetProps } from 'react-jsonschema-form';
+import { getMuiOptions } from '../utils';
 
 const EmailWidget = ({
   id,
@@ -18,6 +18,7 @@ const EmailWidget = ({
   autofocus,
   options,
   schema,
+  placeholder,
 }: WidgetProps) => {
   const _onChange = ({
     target: { value },
@@ -30,24 +31,21 @@ const EmailWidget = ({
   }: React.FocusEvent<HTMLInputElement>) => onFocus(id, value);
 
   return (
-    <FormControl
+    <TextField
       fullWidth={true}
-      //error={!!rawErrors}
+      id={id}
+      label={label || schema.title}
+      placeholder={placeholder}
+      autoFocus={autofocus}
       required={required}
-    >
-      <TextField
-        id={id}
-        label={label || schema.title}
-        autoFocus={autofocus}
-        required={required}
-        disabled={disabled || readonly}
-        type="email"
-        value={value ? value : ''}
-        onChange={_onChange}
-        onBlur={_onBlur}
-        onFocus={_onFocus}
-      />
-    </FormControl>
+      disabled={disabled || readonly}
+      type="email"
+      value={value ? value : ''}
+      onChange={_onChange}
+      onBlur={_onBlur}
+      onFocus={_onFocus}
+      {...getMuiOptions(options)}
+    />
   );
 };
 
