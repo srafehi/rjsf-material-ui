@@ -1,6 +1,5 @@
 import React from 'react';
 
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 
 import { WidgetProps } from 'react-jsonschema-form';
@@ -30,24 +29,19 @@ const TextWidget = ({
   }: React.FocusEvent<HTMLInputElement>) => onFocus(id, value);
 
   return (
-    <FormControl
+    <TextField
       fullWidth={true}
-      //error={!!rawErrors}
+      id={id}
+      label={label || schema.title}
+      autoFocus={autofocus}
       required={required}
-    >
-      <TextField
-        id={id}
-        label={label || schema.title}
-        autoFocus={autofocus}
-        required={required}
-        disabled={disabled || readonly}
-        type="text"
-        value={value ? value : ''}
-        onChange={_onChange}
-        onBlur={_onBlur}
-        onFocus={_onFocus}
-      />
-    </FormControl>
+      disabled={disabled || readonly}
+      type="text"
+      value={value ? value : ''}
+      onChange={_onChange}
+      onBlur={_onBlur}
+      onFocus={_onFocus}
+    />
   );
 };
 
