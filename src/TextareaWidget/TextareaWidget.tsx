@@ -2,8 +2,8 @@ import React from 'react';
 
 import { WidgetProps } from 'react-jsonschema-form';
 
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import { getMuiOptions } from '../utils';
 
 type CustomWidgetProps = WidgetProps & {
   options: any;
@@ -35,26 +35,22 @@ const TextareaWidget = ({
   }: React.FocusEvent<HTMLInputElement>) => onFocus(id, value);
 
   return (
-    <FormControl
+    <TextField
       fullWidth={true}
-      //error={!!rawErrors}
+      id={id}
+      label={label || schema.title}
+      placeholder={placeholder}
+      disabled={disabled || readonly}
+      value={value}
       required={required}
-    >
-      <TextField
-        id={id}
-        label={label || schema.title}
-        placeholder={placeholder}
-        disabled={disabled || readonly}
-        value={value}
-        required={required}
-        autoFocus={autofocus}
-        multiline={true}
-        rows={options.rows || 5}
-        onChange={_onChange}
-        onBlur={_onBlur}
-        onFocus={_onFocus}
-      />
-    </FormControl>
+      autoFocus={autofocus}
+      multiline={true}
+      rows={options.rows || 5}
+      onChange={_onChange}
+      onBlur={_onBlur}
+      onFocus={_onFocus}
+      {...getMuiOptions(options)}
+    />
   );
 };
 
