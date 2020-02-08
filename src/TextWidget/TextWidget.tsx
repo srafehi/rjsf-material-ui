@@ -18,6 +18,7 @@ const TextWidget = ({
   autofocus,
   options,
   schema,
+  placeholder,
 }: WidgetProps) => {
   const _onChange = ({
     target: { value },
@@ -34,6 +35,7 @@ const TextWidget = ({
       fullWidth={true}
       id={id}
       label={label || schema.title}
+      placeholder={placeholder}
       autoFocus={autofocus}
       required={required}
       disabled={disabled || readonly}

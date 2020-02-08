@@ -52,6 +52,7 @@ const SelectWidget = ({
   onChange,
   onBlur,
   onFocus,
+  placeholder,
 }: any) => {
   const { enumOptions, enumDisabled } = options;
 
@@ -73,6 +74,7 @@ const SelectWidget = ({
       fullWidth={true}
       select
       label={label || schema.title}
+      placeholder={placeholder}
       SelectProps={{
         multiple: typeof multiple === 'undefined' ? false : multiple,
       }}

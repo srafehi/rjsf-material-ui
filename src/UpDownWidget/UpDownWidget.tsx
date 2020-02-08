@@ -17,6 +17,7 @@ const UpDownWidget = ({
   autofocus,
   options,
   schema,
+  placeholder,
 }: WidgetProps) => {
   const _onChange = ({
     target: { value },
@@ -32,6 +33,7 @@ const UpDownWidget = ({
       fullWidth={true}
       id={id}
       label={label || schema.title}
+      placeholder={placeholder}
       autoFocus={autofocus}
       required={required}
       disabled={disabled || readonly}
