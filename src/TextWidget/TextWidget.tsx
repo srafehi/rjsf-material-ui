@@ -3,6 +3,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 import { WidgetProps } from 'react-jsonschema-form';
+import { getMuiOptions } from '../utils';
 
 const TextWidget = ({
   id,
@@ -41,6 +42,7 @@ const TextWidget = ({
       onChange={_onChange}
       onBlur={_onBlur}
       onFocus={_onFocus}
+      {...getMuiOptions(options)}
     />
   );
 };
