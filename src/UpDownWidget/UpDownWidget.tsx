@@ -1,10 +1,8 @@
 import React from 'react';
 
-import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-
 import { WidgetProps } from 'react-jsonschema-form';
+import { TextField } from '@material-ui/core';
+import { getMuiOptions } from '../utils';
 
 const UpDownWidget = ({
   id,
@@ -17,6 +15,8 @@ const UpDownWidget = ({
   onBlur,
   onFocus,
   autofocus,
+  options,
+  schema,
 }: WidgetProps) => {
   const _onChange = ({
     target: { value },
@@ -28,25 +28,20 @@ const UpDownWidget = ({
   }: React.FocusEvent<HTMLInputElement>) => onFocus(id, value);
 
   return (
-    <FormControl
+    <TextField
       fullWidth={true}
-      //error={!!rawErrors}
+      id={id}
+      label={label || schema.title}
+      autoFocus={autofocus}
       required={required}
-    >
-      <InputLabel>{label}</InputLabel>
-      <Input
-        id={id}
-        autoFocus={autofocus}
-        required={required}
-        type="number"
-        disabled={disabled || readonly}
-        name={name}
-        value={value ? value : ''}
-        onChange={_onChange}
-        onBlur={_onBlur}
-        onFocus={_onFocus}
-      />
-    </FormControl>
+      disabled={disabled || readonly}
+      type="number"
+      value={value ? value : ''}
+      onChange={_onChange}
+      onBlur={_onBlur}
+      onFocus={_onFocus}
+      {...getMuiOptions(options)}
+    />
   );
 };
 
