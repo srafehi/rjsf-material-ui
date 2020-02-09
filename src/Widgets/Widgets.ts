@@ -8,6 +8,9 @@ import TextareaWidget from '../TextareaWidget/TextareaWidget';
 import TextWidget from '../TextWidget/TextWidget';
 import UpDownWidget from '../UpDownWidget/UpDownWidget';
 import EmailWidget from '../EmailWidget/EmailWidget';
+import DateTimeWidget from '../DateTimeWidget/DateTimeWidget';
+import DateWidget from '../DateWidget/DateWidget';
+import TimeWidget from '../TimeWidget/TimeWidget';
 
 export default {
   CheckboxWidget,
@@ -20,4 +23,8 @@ export default {
   TextWidget,
   UpDownWidget,
   EmailWidget,
+  DateTimeWidget,
+  AltDateTimeWidget: DateTimeWidget,
+  DateWidget,
+  time: TimeWidget,
 };
