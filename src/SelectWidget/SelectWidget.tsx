@@ -13,7 +13,6 @@ type ExtendedWidgetProps = WidgetProps & {
 
 const SelectWidget = (widgetProps: ExtendedWidgetProps) => {
   const { enumOptions, enumDisabled } = widgetProps.options;
-
   const emptyValue = widgetProps.multiple ? [] : '';
   const inputOptions = getMuiInputOptions({
     widgetProps,
@@ -25,10 +24,7 @@ const SelectWidget = (widgetProps: ExtendedWidgetProps) => {
       fullWidth={true}
       select
       SelectProps={{
-        multiple:
-          typeof widgetProps.multiple === 'undefined'
-            ? false
-            : widgetProps.multiple,
+        multiple: widgetProps.multiple || false,
         disabled: inputOptions.disabled,
       }}
       {...inputOptions}
