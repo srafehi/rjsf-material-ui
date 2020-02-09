@@ -11,6 +11,7 @@ import EmailWidget from '../EmailWidget/EmailWidget';
 import DateTimeWidget from '../DateTimeWidget/DateTimeWidget';
 import DateWidget from '../DateWidget/DateWidget';
 import TimeWidget from '../TimeWidget/TimeWidget';
+import ComboBoxWidget from '../ComboBoxWidget/ComboBoxWidget';
 
 export default {
   CheckboxWidget,
@@ -26,5 +27,6 @@ export default {
   DateTimeWidget,
   AltDateTimeWidget: DateTimeWidget,
   DateWidget,
+  combo: ComboBoxWidget,
   time: TimeWidget,
 };
