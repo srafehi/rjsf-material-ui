@@ -3,53 +3,21 @@ import React from 'react';
 import { WidgetProps } from 'react-jsonschema-form';
 
 import TextField from '@material-ui/core/TextField';
-import { getMuiOptions } from '../utils';
+import { getMuiInputOptions, getMuiOptions } from '../utils';
 
-type CustomWidgetProps = WidgetProps & {
+type WidgetWithOptionsProps = WidgetProps & {
   options: any;
 };
 
-const TextareaWidget = ({
-  id,
-  placeholder,
-  value,
-  required,
-  disabled,
-  autofocus,
-  label,
-  readonly,
-  onBlur,
-  onFocus,
-  onChange,
-  options,
-  schema,
-}: CustomWidgetProps) => {
-  const _onChange = ({
-    target: { value },
-  }: React.ChangeEvent<HTMLInputElement>) =>
-    onChange(value === '' ? options.emptyValue : value);
-  const _onBlur = ({ target: { value } }: React.FocusEvent<HTMLInputElement>) =>
-    onBlur(id, value);
-  const _onFocus = ({
-    target: { value },
-  }: React.FocusEvent<HTMLInputElement>) => onFocus(id, value);
-
+const TextareaWidget = (widgetProps: WidgetWithOptionsProps) => {
   return (
     <TextField
       fullWidth={true}
-      id={id}
-      label={label || schema.title}
-      placeholder={placeholder}
-      disabled={disabled || readonly}
-      value={value}
-      required={required}
-      autoFocus={autofocus}
+      type="text"
       multiline={true}
-      rows={options.rows || 5}
-      onChange={_onChange}
-      onBlur={_onBlur}
-      onFocus={_onFocus}
-      {...getMuiOptions(options)}
+      rows={widgetProps.options.rows || 5}
+      {...getMuiInputOptions({ widgetProps, valueCleanser: v => v || '' })}
+      {...getMuiOptions(widgetProps.options)}
     />
   );
 };
