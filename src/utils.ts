@@ -1,7 +1,5 @@
 import { isObject } from 'react-jsonschema-form/lib/utils';
 import { WidgetProps } from 'react-jsonschema-form';
-import * as React from '@types/react';
-import MenuItem from '@material-ui/core/MenuItem';
 
 export interface MuiInputProps
   extends Pick<
@@ -25,7 +23,7 @@ interface MuiOptionsContainer {
   muiOptions?: object;
 }
 
-interface Enum {
+export interface Enum {
   label: any;
   value: any;
   disabled: boolean;
@@ -33,13 +31,7 @@ interface Enum {
 }
 
 export function getMuiOptions({ muiOptions }: MuiOptionsContainer) {
-  return isObject(muiOptions)
-    ? muiOptions
-    : {
-        variant: 'outlined',
-        size: 'small',
-        margin: 'dense',
-      };
+  return isObject(muiOptions) ? muiOptions : {};
 }
 
 export function getMuiInputOptions({
