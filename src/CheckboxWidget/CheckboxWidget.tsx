@@ -5,45 +5,32 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 import { WidgetProps } from 'react-jsonschema-form';
+import { getMuiInputOptions, getMuiOptions } from '../utils';
 
-const CheckboxWidget = (props: WidgetProps) => {
-  const {
-    id,
-    value,
-    required,
-    disabled,
-    readonly,
-    label,
-    autofocus,
-    onChange,
-    onBlur,
-    onFocus,
-  } = props;
-
-  const _onChange = ({}, checked: boolean) => onChange(checked);
-  const _onBlur = ({
-    target: { value },
-  }: React.FocusEvent<HTMLButtonElement>) => onBlur(id, value);
-  const _onFocus = ({
-    target: { value },
-  }: React.FocusEvent<HTMLButtonElement>) => onFocus(id, value);
+const CheckboxWidget = (widgetProps: WidgetProps) => {
+  const inputOptions = getMuiInputOptions({
+    widgetProps,
+    valueCleanser: value => (typeof value === 'undefined' ? false : value),
+  });
+  const muiOnChange = ({}, checked: boolean) => widgetProps.onChange(checked);
 
   return (
-    <FormControl fullWidth={true} required={required}>
+    <FormControl fullWidth={true}>
       <FormControlLabel
         control={
           <Checkbox
-            id={id}
-            checked={typeof value === 'undefined' ? false : value}
-            required={required}
-            disabled={disabled || readonly}
-            autoFocus={autofocus}
-            onChange={_onChange}
-            onBlur={_onBlur}
-            onFocus={_onFocus}
+            id={inputOptions.id}
+            checked={inputOptions.value}
+            required={inputOptions.required}
+            disabled={inputOptions.disabled}
+            autoFocus={inputOptions.autoFocus}
+            onChange={muiOnChange}
+            onBlur={inputOptions.onBlur}
+            onFocus={inputOptions.onFocus}
+            {...getMuiOptions(widgetProps.options)}
           />
         }
-        label={label}
+        label={inputOptions.label}
       />
     </FormControl>
   );
