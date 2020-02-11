@@ -4,6 +4,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import { getMuiOptions, getMuiInputOptions, getEnums, Enum } from '../utils';
 import { TextField } from '@material-ui/core';
 import { WidgetProps } from 'react-jsonschema-form';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 type ExtendedWidgetProps = WidgetProps & {
   options: any;
@@ -49,6 +50,10 @@ const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {
     widgetProps.onChange(value);
   };
 
+  const {
+    TextField: textFieldMuiOptions,
+    Autocomplete: autoCompleteMuiOptions,
+  } = getMuiOptions(widgetProps.options);
   return (
     <Autocomplete
       id={inputOptions.id}
@@ -58,8 +63,10 @@ const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {
       multiple={multiple}
       value={inputOptions.value}
       disabled={inputOptions.disabled}
-      getOptionLabel={option => option.label}
-      getOptionDisabled={option => option.disabled}
+      getOptionLabel={(opt: { label?: string }) => opt.label}
+      getOptionDisabled={(opt: { disabled?: boolean }) => opt.disabled || false}
+      {...autoCompleteMuiOptions}
+      loading={widgetProps.options.loading || false}
       renderInput={params => (
         <TextField
           {...params}
@@ -68,7 +75,18 @@ const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {
           placeholder={inputOptions.placeholder}
           required={inputOptions.required}
           autoFocus={inputOptions.autoFocus}
-          {...getMuiOptions(widgetProps.options)}
+          {...textFieldMuiOptions}
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <React.Fragment>
+                {widgetProps.options.loading ? (
+                  <CircularProgress color="inherit" size={20} />
+                ) : null}
+                {params.InputProps.endAdornment}
+              </React.Fragment>
+            ),
+          }}
         />
       )}
       onChange={muiOnChange}
