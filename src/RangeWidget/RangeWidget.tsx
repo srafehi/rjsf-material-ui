@@ -48,6 +48,8 @@ const RangeWidget = ({
           onChange={_onChange}
           onBlur={_onBlur}
           onFocus={_onFocus}
+          marks={sliderProps.step ? sliderProps.step > 1 : false}
+          valueLabelDisplay="auto"
         />
       </FormControl>
     </Grid>
