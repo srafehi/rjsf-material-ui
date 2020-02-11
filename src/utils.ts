@@ -7,6 +7,7 @@ export interface MuiInputProps
     'onBlur' | 'onFocus' | 'onChange' | 'placeholder'
   > {
   id: string;
+  error: boolean;
   label?: string;
   value: any;
   required: boolean;
@@ -14,8 +15,12 @@ export interface MuiInputProps
   autoFocus: boolean;
 }
 
+interface ExtendedWidgetProps extends WidgetProps {
+  rawErrors?: string[];
+}
+
 interface GetMuiInputProps {
-  widgetProps: WidgetProps;
+  widgetProps: ExtendedWidgetProps;
   valueCleanser?: (value: any) => any;
 }
 
@@ -40,6 +45,7 @@ export function getMuiInputOptions({
 }: GetMuiInputProps): MuiInputProps {
   return {
     id: widgetProps.id,
+    error: widgetProps.rawErrors ? widgetProps.rawErrors.length > 0 : false,
     label: widgetProps.label || widgetProps.schema.title,
     placeholder: widgetProps.placeholder,
     autoFocus: widgetProps.autofocus || false,
