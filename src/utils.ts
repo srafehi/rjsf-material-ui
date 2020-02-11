@@ -25,7 +25,7 @@ interface GetMuiInputProps {
 }
 
 interface MuiOptionsContainer {
-  muiOptions?: object;
+  muiOptions?: { [key: string]: any };
 }
 
 export interface Enum {
@@ -35,8 +35,10 @@ export interface Enum {
   key: string;
 }
 
-export function getMuiOptions({ muiOptions }: MuiOptionsContainer) {
-  return isObject(muiOptions) ? muiOptions : {};
+export function getMuiOptions({
+  muiOptions,
+}: MuiOptionsContainer): { [key: string]: any } {
+  return muiOptions !== undefined && isObject(muiOptions) ? muiOptions : {};
 }
 
 export function getMuiInputOptions({
