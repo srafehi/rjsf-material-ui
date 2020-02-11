@@ -12,6 +12,7 @@ import DateTimeWidget from '../DateTimeWidget/DateTimeWidget';
 import DateWidget from '../DateWidget/DateWidget';
 import TimeWidget from '../TimeWidget/TimeWidget';
 import ComboBoxWidget from '../ComboBoxWidget/ComboBoxWidget';
+import SwitchWidget from '../SwitchWidget/SwitchWidget';
 
 export default {
   CheckboxWidget,
@@ -29,4 +30,5 @@ export default {
   DateWidget,
   combo: ComboBoxWidget,
   time: TimeWidget,
+  switch: SwitchWidget,
 };
