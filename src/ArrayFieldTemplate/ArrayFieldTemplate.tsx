@@ -13,6 +13,7 @@ import { ArrayFieldTemplateProps, IdSchema } from 'react-jsonschema-form';
 
 import AddButton from '../AddButton/AddButton';
 import IconButton from '../IconButton/IconButton';
+import Divider from '@material-ui/core/Divider';
 
 const ArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
   const { schema, registry = getDefaultRegistry() } = props;
@@ -66,54 +67,50 @@ const ArrayFieldDescription = ({
 
 // Used in the two templates
 const DefaultArrayItem = (props: any) => {
-  const btnStyle = {
-    flex: 1,
-    paddingLeft: 6,
-    paddingRight: 6,
-    fontWeight: 'bold',
-  };
   return (
-    <Grid container={true} key={props.index} alignItems="center">
-      <Grid item={true} xs>
-        <Box mb={2}>
-          <Paper elevation={2}>
-            <Box p={2}>{props.children}</Box>
-          </Paper>
-        </Box>
+    <Grid container key={props.index} spacing={2}>
+      <Grid item xs>
+        <Box mb={1}>{props.children}</Box>
+      </Grid>
+
+      <Grid item>
+        <Divider orientation="vertical" light />
       </Grid>
 
       {props.hasToolbar && (
-        <Grid item={true}>
-          {(props.hasMoveUp || props.hasMoveDown) && (
-            <IconButton
-              icon="arrow-up"
-              className="array-item-move-up"
-              tabIndex={-1}
-              style={btnStyle as any}
-              disabled={props.disabled || props.readonly || !props.hasMoveUp}
-              onClick={props.onReorderClick(props.index, props.index - 1)}
-            />
-          )}
+        <Grid item>
+          <Box>
+            {props.index > 0 ? <Divider light /> : null}
+            {(props.hasMoveUp || props.hasMoveDown) && (
+              <IconButton
+                icon="arrow-up"
+                tooltip="Move Up"
+                className="array-item-move-up"
+                disabled={props.disabled || props.readonly || !props.hasMoveUp}
+                onClick={props.onReorderClick(props.index, props.index - 1)}
+              />
+            )}
 
-          {(props.hasMoveUp || props.hasMoveDown) && (
-            <IconButton
-              icon="arrow-down"
-              tabIndex={-1}
-              style={btnStyle as any}
-              disabled={props.disabled || props.readonly || !props.hasMoveDown}
-              onClick={props.onReorderClick(props.index, props.index + 1)}
-            />
-          )}
+            {(props.hasMoveUp || props.hasMoveDown) && (
+              <IconButton
+                icon="arrow-down"
+                tooltip="Move Down"
+                disabled={
+                  props.disabled || props.readonly || !props.hasMoveDown
+                }
+                onClick={props.onReorderClick(props.index, props.index + 1)}
+              />
+            )}
 
-          {props.hasRemove && (
-            <IconButton
-              icon="remove"
-              tabIndex={-1}
-              style={btnStyle as any}
-              disabled={props.disabled || props.readonly}
-              onClick={props.onDropIndexClick(props.index)}
-            />
-          )}
+            {props.hasRemove && (
+              <IconButton
+                icon="remove"
+                tooltip="Remove"
+                disabled={props.disabled || props.readonly}
+                onClick={props.onDropIndexClick(props.index)}
+              />
+            )}
+          </Box>
         </Grid>
       )}
     </Grid>
@@ -161,7 +158,7 @@ const DefaultFixedArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
 
 const DefaultNormalArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
   return (
-    <Paper elevation={2}>
+    <Paper variant="outlined">
       <Box p={2}>
         <ArrayFieldTitle
           key={`array-field-title-${props.idSchema.$id}`}
@@ -184,7 +181,13 @@ const DefaultNormalArrayFieldTemplate = (props: ArrayFieldTemplateProps) => {
 
         <Grid container={true} key={`array-item-list-${props.idSchema.$id}`}>
           {props.items && props.items.map(p => DefaultArrayItem(p))}
-
+          {props.items.length ? (
+            <Grid item xs={12}>
+              <Box mt={1}>
+                <Divider />
+              </Box>
+            </Grid>
+          ) : null}
           {props.canAdd && (
             <Grid container justify="flex-end">
               <Grid item={true}>
