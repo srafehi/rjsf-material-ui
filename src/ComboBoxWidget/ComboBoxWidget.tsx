@@ -1,7 +1,13 @@
 import React from 'react';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { getMuiOptions, getMuiInputOptions, getEnums, Enum } from '../utils';
+import {
+  getMuiOptions,
+  getMuiInputOptions,
+  getEnums,
+  Enum,
+  removeInvalidEnumSelections,
+} from '../utils';
 import { TextField } from '@material-ui/core';
 import { WidgetProps } from 'react-jsonschema-form';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -15,6 +21,14 @@ const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {
   const enumOptions = getEnums(
     widgetProps.options.enumOptions,
     widgetProps.options.enumDisabled
+  );
+
+  React.useEffect(
+    () =>
+      removeInvalidEnumSelections(widgetProps.value, enumOptions, value =>
+        widgetProps.onChange(value)
+      ),
+    [widgetProps.value, enumOptions]
   );
 
   const emptyValue = widgetProps.multiple ? [] : null;
@@ -71,6 +85,13 @@ const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {
         <TextField
           {...params}
           fullWidth={true}
+          onChange={({
+            target: { value },
+          }: React.ChangeEvent<HTMLInputElement>) => {
+            if (value === '' || value === undefined) {
+              widgetProps.onChange(undefined);
+            }
+          }}
           label={inputOptions.label}
           placeholder={inputOptions.placeholder}
           required={inputOptions.required}

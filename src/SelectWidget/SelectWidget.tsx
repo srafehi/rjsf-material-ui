@@ -2,7 +2,12 @@ import React from 'react';
 
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { getMuiOptions, getMuiInputOptions, getEnums } from '../utils';
+import {
+  getMuiOptions,
+  getMuiInputOptions,
+  getEnums,
+  removeInvalidEnumSelections,
+} from '../utils';
 import { TextField } from '@material-ui/core';
 import { WidgetProps } from 'react-jsonschema-form';
 
@@ -13,6 +18,15 @@ type ExtendedWidgetProps = WidgetProps & {
 
 const SelectWidget = (widgetProps: ExtendedWidgetProps) => {
   const { enumOptions, enumDisabled } = widgetProps.options;
+
+  React.useEffect(
+    () =>
+      removeInvalidEnumSelections(widgetProps.value, enumOptions, value =>
+        widgetProps.onChange(value)
+      ),
+    [widgetProps.value, enumOptions]
+  );
+
   const emptyValue = widgetProps.multiple ? [] : '';
   const inputOptions = getMuiInputOptions({
     widgetProps,
