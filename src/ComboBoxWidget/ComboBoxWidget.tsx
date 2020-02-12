@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 type ExtendedWidgetProps = WidgetProps & {
   options: any;
-  multiple: any;
+  multiple?: any;
 };
 
 const ComboBoxWidget = (widgetProps: ExtendedWidgetProps) => {

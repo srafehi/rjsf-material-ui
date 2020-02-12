@@ -8,7 +8,7 @@ import { WidgetProps } from 'react-jsonschema-form';
 
 type ExtendedWidgetProps = WidgetProps & {
   options: any;
-  multiple: any;
+  multiple?: any;
 };
 
 const SelectWidget = (widgetProps: ExtendedWidgetProps) => {
