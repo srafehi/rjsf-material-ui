@@ -73,24 +73,24 @@ export function getEnums(enumOptions: any[], enumDisabled: any[]): Enum[] {
   });
 }
 
-export function removeInvalidEnumSelections(
+export function cleanseEnumSelection(
   selection: any[] | any,
-  enumOptions: Enum[],
-  onUpdate: (validValue: any) => void
-): void {
-  if (selection === undefined) {
-    return;
-  }
-
+  enumOptions: Enum[]
+): any {
   const selectedValues = Array.isArray(selection) ? selection : [selection];
   const selectedValueSet = new Set(selectedValues);
   const filteredValues: any[] = enumOptions
-    .filter(enumOption => selectedValueSet.has(enumOption.value))
+    .filter(
+      enumOption =>
+        !enumOption.disabled && selectedValueSet.has(enumOption.value)
+    )
     .map(enumOption => enumOption.value);
 
   if (filteredValues.length === 0) {
-    onUpdate(undefined);
+    return undefined;
   } else if (filteredValues.length !== selectedValues.length) {
-    onUpdate([...filteredValues]);
+    return [...filteredValues];
+  } else {
+    return selection;
   }
 }

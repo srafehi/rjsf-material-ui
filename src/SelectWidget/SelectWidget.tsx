@@ -6,7 +6,7 @@ import {
   getMuiOptions,
   getMuiInputOptions,
   getEnums,
-  removeInvalidEnumSelections,
+  cleanseEnumSelection,
 } from '../utils';
 import { TextField } from '@material-ui/core';
 import { WidgetProps } from 'react-jsonschema-form';
@@ -19,13 +19,10 @@ type ExtendedWidgetProps = WidgetProps & {
 const SelectWidget = (widgetProps: ExtendedWidgetProps) => {
   const { enumOptions, enumDisabled } = widgetProps.options;
 
-  React.useEffect(
-    () =>
-      removeInvalidEnumSelections(widgetProps.value, enumOptions, value =>
-        widgetProps.onChange(value)
-      ),
-    [widgetProps.value, enumOptions]
-  );
+  React.useEffect(() => {
+    const selection = cleanseEnumSelection(widgetProps.value, enumOptions);
+    widgetProps.onChange(selection);
+  }, [widgetProps.value, enumOptions]);
 
   const emptyValue = widgetProps.multiple ? [] : '';
   const inputOptions = getMuiInputOptions({
