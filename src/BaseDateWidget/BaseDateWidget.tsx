@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
-
 import { WidgetProps } from 'react-jsonschema-form';
 import {
-  DateTimePicker,
   DatePicker,
+  DateTimePicker,
+  LocalizationProvider,
   TimePicker,
-  MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
-import DateFnsAdapter from '@date-io/date-fns';
-import { getMuiOptions, getMuiInputOptions } from '../utils';
+import DateFnsUtils from '@material-ui/pickers/adapter/date-fns';
+import { getMuiInputOptions, getMuiOptions } from '../utils';
+import { TextField } from '@material-ui/core';
 
 interface BaseDateWidgetProps {
   type: 'date-time' | 'date' | 'time';
@@ -36,7 +36,7 @@ const BaseDateWidget = ({
       Component = DateTimePicker;
   }
 
-  const dateAdapter = useMemo<DateFnsAdapter>(() => new DateFnsAdapter(), []);
+  const dateAdapter = useMemo<DateFnsUtils>(() => new DateFnsUtils(), []);
   const inputOptions = getMuiInputOptions({
     widgetProps,
     valueCleanser: value => (value ? dateAdapter.date(value) : null),
@@ -49,8 +49,9 @@ const BaseDateWidget = ({
   muiOptions.inputVariant = muiOptions.variant;
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsAdapter}>
+    <LocalizationProvider dateAdapter={DateFnsUtils}>
       <Component
+        renderInput={props => <TextField {...props} />}
         fullWidth={true}
         onChange={muiOnChange}
         format={format}
@@ -58,7 +59,7 @@ const BaseDateWidget = ({
         {...{ ...inputOptions, onChange: muiOnChange }}
         {...muiOptions}
       />
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 

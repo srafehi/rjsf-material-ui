@@ -24,7 +24,7 @@ const IconButton = (props: IconButtonProps) => {
   const { icon, className, ...otherProps } = props;
   const Icon = mappings[icon];
   return (
-    <Tooltip title={props.tooltip} enterDelay={500}>
+    <Tooltip title={props.tooltip || ''} enterDelay={500}>
       <span>
         <MuiIconButton {...otherProps}>
           <Icon />
